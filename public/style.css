@@ -1,0 +1,29 @@
+* {
+    font-family: Monospace;
+}
+
+nav {
+    background: #6dc46d !important;
+}
+
+.navbar-default .navbar-brand{
+    color: white;
+    font-family: monospace;
+    font-size: 20px;
+}
+
+
+a {
+    visibility: visible;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #237523;
+}
+
+.details {
+    font-size: 17px;
+    font-weight: bold;
+}

@@ -1,0 +1,18 @@
+<% include partials/header.ejs%>
+  <div class="container text-center">
+                <h1>Search For A Job</h1>
+                    <div style="width:30%; margin:25px auto;">
+                         <form action="/search" method="GET" >
+                             <div class="form-group">
+                                 <input type="text" name="location" placeholder="Location" class="form-control">
+                             </div>
+                             <div class="form-group">
+                                 <input type="text" name="description" placeholder="Ruby, Java, Python...etc" class="form-control">
+                             </div>
+                             <div class="form-group">
+                                 <button class="form-control btn btn-success">SEARCH</button>
+                             </div>
+                         </form> 
+                    </div>
+        </div>
+<% include partials/footer.ejs%>
