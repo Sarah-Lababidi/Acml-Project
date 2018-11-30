@@ -5,6 +5,9 @@ var request = require('request');
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/jobs", {useNewUrlParser: true});
 var Job = require("./models/jobs");
+var location;
+var description;
+
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
@@ -52,13 +55,13 @@ app.get("/jobs", function(req, res){
                     });
                 });
             } 
-        }
-    });
-    Job.find({"location": { $regex: location, $options: 'i'}, "description": { $regex: description, $options: 'i'} }, function(err, jobs){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("jobs", {jobs:jobs});
+            Job.find({"location": { $regex: location, $options: 'i'}, "description": { $regex: description, $options: 'i'} }, function(err, jobs){
+                if(err){
+                    console.log(err);
+                } else {
+                    res.render("jobs", {jobs:jobs});
+                }
+            }); 
         }
     });
 });
