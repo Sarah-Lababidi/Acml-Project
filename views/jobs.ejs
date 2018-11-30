@@ -1,20 +1,22 @@
 <% include partials/header.ejs%>
         <div class="container">
             <div class= "row" >
-                    <% data.forEach(function(element){ %>
+                    <% jobs.forEach(function(element){ %>
                         <div class="col-lg-12">
                             <div class="thumbnail well">
-                                    <%  var jobTitle = element["title"]; %>
-                                    <% var jobType = element["type"]; %>
-                                    <% var descriptionUrl = element["url"]; %>
-                                    <% var companyName = element["company"]; %>
-                                    <% var companyUrl = element["company_url"]; %>
+                                    <%  var jobTitle = element.title; %>
+                                    <% var jobType = element.type; %>
+                                    <% var descriptionUrl = element.descriptionUrl; %>
+                                    <% var location = element.location; %>
+                                    <% var companyName = element.companyName; %>
+                                    <% var companyUrl = element.companyUrl; %>
                                     <%if(companyUrl==null){%>
                                         <%companyUrl = "None"%>
                                     <%}%>
                                 <p><span class="title">Job Title:</span> <span class="details"> <%= jobTitle%></span></p>
                                 <p><span class="title">Type:</span><span class="details"> <%= jobType%></span></p>
                                 <p><span class="title">Description:</span><span class="details"> <a href=<%= descriptionUrl%>><%= descriptionUrl%></a></span></p>
+                                <p><span class="title">Location:</span><span class="details"> <%= location%></span></p>
                                 <p><span class="title">Company Name:</span><span class="details"> <%= companyName%></span></p>
                                 <p><span class="title">Company URL:</span><span class="details"><a href=<%= companyUrl%>><%= companyUrl%></a></span></p>
                             </div>  
