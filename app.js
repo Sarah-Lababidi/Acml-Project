@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/jobs", {useNewUrlParser: true});
+mongoose.connect("mongodb://mongo:27017/docker-node-mongo", {useNewUrlParser: true});
 var Job = require("./models/jobs");
 var location;
 var description;
@@ -16,7 +16,6 @@ app.use(express.static("public"));
 app.get("/", function(req, res){
     res.render("index");
 });
-
 
 app.get("/jobs", function(req, res){
     location = req.query.location;
@@ -33,10 +32,8 @@ app.get("/jobs", function(req, res){
                 request(url, function(error, response, body){
                     if(!error&&response.statusCode==200){
                        var parsedData = JSON.parse(body);
-                    }
-                    // save to database
-                    //console.log(parsedData);
-                    parsedData.forEach(function(element){
+                       let cb_counter = 0;
+                       parsedData.forEach(function(element){
                         Job.create({
                             title: element["title"], 
                             type: element["type"],
@@ -48,20 +45,32 @@ app.get("/jobs", function(req, res){
                         }, function(err, newjob){
                             if(err){
                                 console.log(err);
-                            } else {
+                            } else { 
+                                cb_counter++;
                                 console.log(newjob);
+                                if(cb_counter==parsedData.length){
+                                    Job.find({"location": { $regex: location, $options: 'i'}, "description": { $regex: description, $options: 'i'} }, function(err, jobs){
+                                        if(err){
+                                            console.log(err);
+                                        } else {
+                                            res.render("jobs", {jobs:jobs});
+                                        }
+                                    });
+                                }
                             }
                         });
-                    });
+                        });
+                    }
                 });
-            } 
-            Job.find({"location": { $regex: location, $options: 'i'}, "description": { $regex: description, $options: 'i'} }, function(err, jobs){
-                if(err){
-                    console.log(err);
-                } else {
-                    res.render("jobs", {jobs:jobs});
-                }
-            }); 
+            } else {
+		        Job.find({"location": { $regex: location, $options: 'i'}, "description": { $regex: description, $options: 'i'} }, function(err, jobs){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        res.render("jobs", {jobs:jobs});
+                    }
+                });
+            }
         }
     });
 });

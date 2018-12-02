@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/jobs", { useNewUrlParser: true });
+mongoose.connect("mongodb://mongo:27017/docker-node-mongo", { useNewUrlParser: true });
 
 var jobSchema = new mongoose.Schema({
     title: String, 
